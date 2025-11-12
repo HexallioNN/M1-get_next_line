@@ -6,7 +6,7 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:47 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/12 15:08:14 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:46:29 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 char	*get_next_line(int fd);
 int		ft_strlen(const char *s);
-char	*ft_strdup(const char *s, int size);
+char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif /* GET_NEXT_LINE_H */
