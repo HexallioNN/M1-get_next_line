@@ -6,7 +6,7 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:47 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/08 14:33:33 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/12 15:08:14 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+int		ft_strlen(const char *s);
+char	*ft_strdup(const char *s, int size);
 
 #endif /* GET_NEXT_LINE_H */
