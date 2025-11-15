@@ -6,7 +6,7 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:46 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/14 14:21:26 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/15 15:44:28 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*fill_buffer(int fd, char *buffer)
 	int		bytes_read;
 
 	bytes_read = 1;
+	if (!buffer)
+		buffer = ft_strdup("");
 	while (!ft_strchr(buffer, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, temp, BUFFER_SIZE);
@@ -45,7 +47,7 @@ static char	*get_line(char *buffer)
 	i = 0;
 	if (!buffer || !*buffer)
 		return (NULL);
-	while (buffer[i] || buffer[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (buffer[i] == '\n')
 		is_newline = 1;
@@ -61,7 +63,7 @@ static char	*create_new_buffer(char *buffer)
 	int		i;
 
 	i = 0;
-	while (!buffer || !*buffer)
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (!buffer[i])
 	{
@@ -78,7 +80,9 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*result;
 
-	if (fd <= 0 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE > 8380000)
+		return (NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = fill_buffer(fd, buffer);
 	if (!buffer)
@@ -88,10 +92,13 @@ char	*get_next_line(int fd)
 	return (result);
 }
 
-int	main(void)
-{
-	int	fd;
+// int	main(void)
+// {
+// 	int	fd;
 
-	fd = open("test.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// }

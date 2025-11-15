@@ -6,7 +6,7 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:43 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/14 14:10:24 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/14 14:36:50 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *result;
-	int s1_count;
-	int s2_count;
-	int i;
+	char	*result;
+	int		s1_count;
+	int		s2_count;
+	int		i;
 
 	s1_count = ft_strlen(s1);
 	s2_count = ft_strlen(s2);
