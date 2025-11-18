@@ -6,34 +6,24 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:46 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/18 12:33:26 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/18 12:52:50 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-static char	*fill_buffer(int fd, char *buffer)
+static char	*buffer_loop(int fd, char *buffer, char *temp)
 {
-	char	*temp;
-	char	*tmp;
 	int		bytes_read;
+	char	*tmp;
 
-	temp = malloc(BUFFER_SIZE + 1);
-	if (!temp)
-	{
-		free(temp);
-		return (NULL);
-	}
 	bytes_read = 1;
-	if (!buffer)
-		buffer = ft_strdup("");
 	while (!ft_strchr(buffer, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, temp, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
-			free(temp);
 			free(buffer);
 			return (NULL);
 		}
@@ -42,11 +32,32 @@ static char	*fill_buffer(int fd, char *buffer)
 		buffer = ft_strjoin(buffer, temp);
 		if (!buffer)
 		{
-			free(temp);
 			free(buffer);
 			return (NULL);
 		}
 		free(tmp);
+	}
+	return (buffer);
+}
+
+static char	*fill_buffer(int fd, char *buffer)
+{
+	char	*temp;
+
+	temp = malloc(BUFFER_SIZE + 1);
+	if (!temp)
+	{
+		free(temp);
+		return (NULL);
+	}
+	if (!buffer)
+		buffer = ft_strdup("");
+	buffer = buffer_loop(fd, buffer, temp);
+	if (!buffer)
+	{
+		free(temp);
+		free(buffer);
+		return (NULL);
 	}
 	free(temp);
 	return (buffer);
