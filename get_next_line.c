@@ -6,7 +6,7 @@
 /*   By: ikalach <ikalach@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:31:46 by ikalach           #+#    #+#             */
-/*   Updated: 2025/11/15 15:44:28 by ikalach          ###   ########.fr       */
+/*   Updated: 2025/11/18 12:33:26 by ikalach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 
 static char	*fill_buffer(int fd, char *buffer)
 {
-	char	temp[BUFFER_SIZE + 1];
+	char	*temp;
 	char	*tmp;
 	int		bytes_read;
 
+	temp = malloc(BUFFER_SIZE + 1);
+	if (!temp)
+	{
+		free(temp);
+		return (NULL);
+	}
 	bytes_read = 1;
 	if (!buffer)
 		buffer = ft_strdup("");
@@ -27,14 +33,22 @@ static char	*fill_buffer(int fd, char *buffer)
 		bytes_read = read(fd, temp, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
+			free(temp);
 			free(buffer);
 			return (NULL);
 		}
 		temp[bytes_read] = '\0';
 		tmp = buffer;
 		buffer = ft_strjoin(buffer, temp);
+		if (!buffer)
+		{
+			free(temp);
+			free(buffer);
+			return (NULL);
+		}
 		free(tmp);
 	}
+	free(temp);
 	return (buffer);
 }
 
@@ -80,8 +94,6 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*result;
 
-	if (BUFFER_SIZE > 8380000)
-		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = fill_buffer(fd, buffer);
